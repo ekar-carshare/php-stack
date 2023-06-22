@@ -6,7 +6,13 @@
 
 ARG PHP_NGINX_VERSION
 
-FROM gbmcarlos/php-nginx:${PHP_NGINX_VERSION} as base
+#FROM gbmcarlos/php-nginx:${PHP_NGINX_VERSION} as base
+FROM 049836007356.dkr.ecr.eu-west-1.amazonaws.com/php-arm64:php-nginx as base
+
+RUN apt-get update && apt-get install -y libxml2-dev
+RUN docker-php-ext-install pcntl soap
+RUN docker-php-ext-enable pcntl soap
+
 
 ## Composer dependencies
 ### Install just the dependencies, without the code, so no need to dump the autoloader yet

@@ -6,18 +6,23 @@
 
 ARG PHP_BASE_VERSION
 
-FROM gbmcarlos/php-base:${PHP_BASE_VERSION} as base
+#FROM gbmcarlos/php-base:${PHP_BASE_VERSION} as base
+
+FROM 049836007356.dkr.ecr.eu-west-1.amazonaws.com/php-arm64:php-base as base
+
 
 ## System dependencies
-RUN amazon-linux-extras install \
-        nginx1.12
+#RUN amazon-linux-extras install \
+        #nginx1.12
+
+RUN apt-get update && apt-get install -y nginx
 
 ### Set up permissions
-RUN     groupadd www \
-    &&  adduser -g www www \
-    &&  mkdir -p /var/tmp/nginx \
-    &&  chown -R www:www /var/tmp/nginx \
-    &&  chown -R www:www /tmp
+RUN groupadd www \
+    && useradd -g www www \
+    && mkdir -p /var/tmp/nginx \
+    && chown -R www:www /var/tmp/nginx \
+    && chown -R www:www /tmp
 
 ### Copy the init script
 COPY init.sh /opt/bin/init.sh

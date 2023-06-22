@@ -6,13 +6,19 @@
 
 ARG PHP_NGINX_VERSION
 
-FROM gbmcarlos/php-nginx:${PHP_NGINX_VERSION} as base
+# FROM gbmcarlos/php-nginx:${PHP_NGINX_VERSION} as base
+
+FROM 049836007356.dkr.ecr.eu-west-1.amazonaws.com/php-arm64:php-nginx as base
 
 ARG NODEJS_VERSION
 
 ## Nodejs
-RUN     curl -sL https://rpm.nodesource.com/setup_${NODEJS_VERSION}.x | bash - \
-    &&  yum install -y nodejs
+#RUN     curl -sL https://rpm.nodesource.com/setup_${NODEJS_VERSION}.x | bash - \
+#    &&  yum install -y nodejs
+
+RUN curl -sL https://deb.nodesource.com/setup_12.x | bash - \
+    && apt install nodejs
+
 
 ## NOM dependencies
 ### Install just the dependencies, without the code

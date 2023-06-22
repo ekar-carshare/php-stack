@@ -4,15 +4,11 @@
 # All these instrucionts will be executed on the downstream Dockerfile (the Dockerfile that uses this image as FROM)
 #####
 
-ARG PHP_NGINX_VERSION
+ARG BASE_IMAGE_USER
+ARG BASE_IMAGE_TAG
+ARG BASE_IMAGE_ARCH
 
-#FROM gbmcarlos/php-nginx:${PHP_NGINX_VERSION} as base
-FROM 049836007356.dkr.ecr.eu-west-1.amazonaws.com/php-arm64:php-nginx as base
-
-RUN apt-get update && apt-get install -y libxml2-dev
-RUN docker-php-ext-install pcntl soap
-RUN docker-php-ext-enable pcntl soap
-
+FROM ${BASE_IMAGE_USER}/php-base:${BASE_IMAGE_TAG}-${BASE_IMAGE_ARCH} as base
 
 ## Composer dependencies
 ### Install just the dependencies, without the code, so no need to dump the autoloader yet

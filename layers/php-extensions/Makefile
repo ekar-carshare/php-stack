@@ -7,4 +7,3 @@ publish build: $(extensions)
 
 $(extensions):
 	$(MAKE) -C $@ $(TARGET)
-

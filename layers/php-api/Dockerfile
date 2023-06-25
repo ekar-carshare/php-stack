@@ -8,7 +8,7 @@ ARG BASE_IMAGE_USER
 ARG BASE_IMAGE_TAG
 ARG BASE_IMAGE_ARCH
 
-FROM ${BASE_IMAGE_USER}/php-base:${BASE_IMAGE_TAG}-${BASE_IMAGE_ARCH} as base
+FROM ${BASE_IMAGE_USER}/php-nginx:${BASE_IMAGE_TAG}-${BASE_IMAGE_ARCH} as base
 
 ## Composer dependencies
 ### Install just the dependencies, without the code, so no need to dump the autoloader yet

@@ -18,7 +18,7 @@ export NODEJS_VERSION := 12
 publish build: $(layers)
 
 # php-api and php-web depend on php-nginx
-php-api php-web: php-nginx
+php-api php-web: $(php-nginx)
 
 # php-nginx depends on php-base
 php-nginx: $(php-base)

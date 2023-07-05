@@ -12,8 +12,9 @@ WORKDIR /var/task
 RUN     apt-get update \
     &&  apt-get install -y \
             vim htop less tree git zip unzip tar \
-            libxml2-dev \
-    &&  docker-php-ext-install pcntl soap \
+            libxml2-dev
+
+RUN     docker-php-ext-install pcntl soap pdo pdo_mysql \
     &&  docker-php-ext-enable pcntl soap
 
 ### Add composer

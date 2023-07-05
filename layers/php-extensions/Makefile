@@ -6,4 +6,4 @@ extensions := ddtrace fpm-prometheus xdebug
 publish build: $(extensions)
 
 $(extensions):
-	$(MAKE) -C $@ $(TARGET)
+	$(MAKE) $(MAKECMDGOALS) IMAGE_TAG=$(IMAGE_TAG) -C "$@"

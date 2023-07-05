@@ -24,8 +24,8 @@ ONBUILD COPY --chown=www:www ./src ./src
 ONBUILD RUN composer dump-autoload -v --classmap-authoritative --no-dev --no-interaction --no-ansi
 
 ### Project-specific config files
-ONBUILD COPY config/php.ini ./php/conf.d/php.ini
-ONBUILD COPY config/php-fpm.ini ./php-fpm/conf.d/php-fpm.ini
+ONBUILD COPY config/php.ini /usr/local/etc/php/conf.d/php.ini
+ONBUILD COPY config/php-fpm.ini /usr/local/etc/php/conf.d/php-fpm.ini
 ONBUILD COPY config/nginx.conf /etc/nginx/nginx.conf
 
 ## ENV VARS

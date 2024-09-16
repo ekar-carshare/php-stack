@@ -4,9 +4,11 @@
 # All these instrucionts will be executed on the downstream Dockerfile (the Dockerfile that uses this image as FROM)
 #####
 
-ARG PHP_NGINX_VERSION
+ARG BASE_IMAGE_USER
+ARG BASE_IMAGE_TAG
+ARG BASE_IMAGE_ARCH
 
-FROM gbmcarlos/php-nginx:${PHP_NGINX_VERSION} as base
+FROM ${BASE_IMAGE_USER}/php-nginx:${BASE_IMAGE_TAG}-${BASE_IMAGE_ARCH} as base
 
 ## Composer dependencies
 ### Install just the dependencies, without the code, so no need to dump the autoloader yet
@@ -22,8 +24,8 @@ ONBUILD COPY --chown=www:www ./src ./src
 ONBUILD RUN composer dump-autoload -v --classmap-authoritative --no-dev --no-interaction --no-ansi
 
 ### Project-specific config files
-ONBUILD COPY config/php.ini ./php/conf.d/php.ini
-ONBUILD COPY config/php-fpm.ini ./php-fpm/conf.d/php-fpm.ini
+ONBUILD COPY config/php.ini /usr/local/etc/php/conf.d/php.ini
+ONBUILD COPY config/php-fpm.ini /usr/local/etc/php/conf.d/php-fpm.ini
 ONBUILD COPY config/nginx.conf /etc/nginx/nginx.conf
 
 ## ENV VARS

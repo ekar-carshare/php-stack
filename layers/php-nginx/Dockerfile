@@ -4,20 +4,21 @@
 # The result is an image upon which we can run PHP web applications
 #####
 
-ARG PHP_BASE_VERSION
+ARG BASE_IMAGE_USER
+ARG BASE_IMAGE_TAG
+ARG BASE_IMAGE_ARCH
 
-FROM gbmcarlos/php-base:${PHP_BASE_VERSION} as base
+FROM ${BASE_IMAGE_USER}/php-base:${BASE_IMAGE_TAG}-${BASE_IMAGE_ARCH} as base
 
-## System dependencies
-RUN amazon-linux-extras install \
-        nginx1.12
+RUN     apt-get update \
+    &&  apt-get install -y nginx
 
 ### Set up permissions
-RUN     groupadd www \
-    &&  adduser -g www www \
-    &&  mkdir -p /var/tmp/nginx \
-    &&  chown -R www:www /var/tmp/nginx \
-    &&  chown -R www:www /tmp
+RUN groupadd www \
+    && useradd -g www www \
+    && mkdir -p /var/tmp/nginx \
+    && chown -R www:www /var/tmp/nginx \
+    && chown -R www:www /tmp
 
 ### Copy the init script
 COPY init.sh /opt/bin/init.sh

@@ -1,10 +1,13 @@
-ARG PHP_BASE_VERSION
+ARG BASE_IMAGE_USER
+ARG BASE_IMAGE_TAG
+ARG BASE_IMAGE_ARCH
 
-FROM gbmcarlos/php-base:${PHP_BASE_VERSION} as build
+FROM ${BASE_IMAGE_USER}/php-base:${BASE_IMAGE_TAG}-${BASE_IMAGE_ARCH} as build
 
-ARG TARGETARCH
+ARG BASE_IMAGE_ARCH
 
-RUN     curl -sL https://github.com/hipages/php-fpm_exporter/releases/download/v2.2.0/php-fpm_exporter_2.2.0_linux_$TARGETARCH.tar.gz | tar -xz \
+RUN     curl -L -O https://github.com/hipages/php-fpm_exporter/releases/download/v2.2.0/php-fpm_exporter_2.2.0_linux_$BASE_IMAGE_ARCH.tar.gz \
+    &&  tar -xf php-fpm_exporter_2.2.0_linux_$BASE_IMAGE_ARCH.tar.gz \
     &&  mv php-fpm_exporter /opt/
 
 FROM scratch as base

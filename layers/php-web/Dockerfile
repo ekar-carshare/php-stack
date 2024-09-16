@@ -4,15 +4,16 @@
 # All these instrucionts will be executed on the downstream Dockerfile (the Dockerfile that uses this image as FROM)
 #####
 
-ARG PHP_NGINX_VERSION
+ARG BASE_IMAGE_USER
+ARG BASE_IMAGE_TAG
+ARG BASE_IMAGE_ARCH
 
-FROM gbmcarlos/php-nginx:${PHP_NGINX_VERSION} as base
+FROM ${BASE_IMAGE_USER}/php-nginx:${BASE_IMAGE_TAG}-${BASE_IMAGE_ARCH} as base
 
 ARG NODEJS_VERSION
 
-## Nodejs
-RUN     curl -sL https://rpm.nodesource.com/setup_${NODEJS_VERSION}.x | bash - \
-    &&  yum install -y nodejs
+RUN curl -sL https://deb.nodesource.com/setup_12.x | bash - && apt install nodejs
+
 
 ## NOM dependencies
 ### Install just the dependencies, without the code

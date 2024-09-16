@@ -5,15 +5,17 @@
 
 ARG DD_VERSION
 
-ARG PHP_VERSION_SHORT
-ARG BREF_VERSION
+ARG BASE_IMAGE_USER
+ARG BASE_IMAGE_TAG
+ARG BASE_IMAGE_ARCH
 
-FROM bref/build-php-${PHP_VERSION_SHORT}:${BREF_VERSION} as build
+FROM ${BASE_IMAGE_USER}/php-base:${BASE_IMAGE_TAG}-${BASE_IMAGE_ARCH} as build
 
 ARG DD_VERSION
 
-RUN     curl -sL https://github.com/DataDog/dd-trace-php/releases/download/${DD_VERSION}/datadog-php-tracer-${DD_VERSION}.x86_64.tar.gz | tar -xz \
-    &&  mv opt/* /opt/
+RUN     curl -LOJ https://github.com/DataDog/dd-trace-php/releases/download/0.80.0/datadog-php-tracer_0.80.0_arm64.deb \
+    &&  dpkg-deb -R datadog-php-tracer_0.80.0_arm64.deb extracted_contents \
+    &&  mv extracted_contents/opt/* /opt/
 
 RUN echo $'\
 extension=/opt/datadog-php/extensions/no-debug-non-zts-20190902/ddtrace.so \n\

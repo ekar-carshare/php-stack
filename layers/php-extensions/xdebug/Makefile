@@ -4,7 +4,7 @@
 export DOCKER_BUILDKIT ?= 1
 export IMAGE_REGISTRY := docker.io
 export IMAGE_USER := gbmcarlos
-export IMAGE_REPO := php-ext-fpm-prometheus
+export IMAGE_REPO := php-ext-xdebug
 export IMAGE_TAG := latest
 export ARCHES := arm64 amd64
 export IMAGE_NAME := ${IMAGE_REGISTRY}/${IMAGE_USER}/${IMAGE_REPO}:${IMAGE_TAG}

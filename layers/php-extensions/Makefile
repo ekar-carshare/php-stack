@@ -1,4 +1,4 @@
-extensions := ddtrace fpm-prometheus
+extensions := ddtrace fpm-prometheus xdebug
 
 .DEFAULT_GOAL := build
 .PHONY: build publish $(extensions)
@@ -6,5 +6,4 @@ extensions := ddtrace fpm-prometheus
 publish build: $(extensions)
 
 $(extensions):
-	$(MAKE) -C $@ $(TARGET)
-
+	$(MAKE) $(MAKECMDGOALS) IMAGE_TAG=$(IMAGE_TAG) -C "$@"
